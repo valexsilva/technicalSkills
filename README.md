@@ -213,7 +213,7 @@ Obtén la IP externa del servicio para acceder a tu aplicación:
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](valex-app.png)
 
 ### Desplegar la Imagen en Google Cloud Run
 
