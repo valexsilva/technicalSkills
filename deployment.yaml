@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: nueva-app-java
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: nueva-app-java
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: nueva-app-java
-        image: gcr.io/tu-proyecto-id/nueva-app-java
+        image: gcr.io/proyecto-java-valex/nueva-app-java:latest
         ports:
         - containerPort: 8080
