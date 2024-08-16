@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nueva-app-java
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nueva-app-java
+  template:
+    metadata:
+      labels:
+        app: nueva-app-java
+    spec:
+      containers:
+      - name: nueva-app-java
+        image: gcr.io/tu-proyecto-id/nueva-app-java
+        ports:
+        - containerPort: 8080
