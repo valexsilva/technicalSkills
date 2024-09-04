@@ -1,0 +1,398 @@
+openapi: 3.0.1
+info:
+  title: API Bench Admin
+  description: Microservice that exposes rule engine APIs
+  version: 0.0.1
+servers:
+  - url: https://localhost/
+tags:
+  - name: team
+  - name: member
+paths:
+  /team:
+    get:
+      tags:
+        - team      
+      summary: Get all about every team and member (manager,courses completed & actual and last evidence capture) US 2 & 9
+      operationId: getAllTeamsAbout
+      parameters:
+        - in: header
+          name: "pdf"
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Rule returned successfully
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/Rule'
+      security:
+        - ApiKeyAuth:
+            - system/rule.read
+            - system/rule.write
+    post:
+      tags:
+        - team      
+      summary: Create a team to assign team members US 6a.
+      operationId: createTeam
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/Rule'
+      responses:
+        '200':
+          description: A successful response
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/Rule'
+      security:
+        - ApiKeyAuth:
+            - system/rule.read
+            - system/rule.write
+  /team/{listIdTeam}:
+    get:
+      tags:
+        - team      
+      summary: Get all about every team member (manager,courses completed & actual and last evidence capture) by idTeam US 8
+      operationId: getAllTeamAboutByIdTeam
+      parameters:
+        - in: path
+          name: "listIdTeam"
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: "pdf"
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Rule returned successfully
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/Rule'
+      security:
+        - ApiKeyAuth:
+            - system/rule.read
+            - system/rule.write
+  /team/{idTeam}/member/{listIdMember}:
+    put:
+      tags:
+        - team      
+      summary: Add a team member to team by id team and id member US 6b
+      operationId: assignTeamByIdMember
+      parameters:
+        - in: path
+          name: "idTeam"
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: "listIdMember"
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/Rule'
+      responses:
+        '200':
+          description: Rule updated successfully
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/Rule'
+      security:
+        - ApiKeyAuth:
+            - system/rule.read
+            - system/rule.write
+  /team/{listIdMember}:
+    delete:
+      tags:
+        - team      
+      summary: Kick a team member to team by id team and id member US 6b
+      operationId: deleteRule
+      parameters:
+        - in: path
+          name: "listIdMember"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rule deleted successfully
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/Rule'
+      security:
+        - ApiKeyAuth:
+            - system/rule.read
+            - system/rule.write
+  /member/{idMember}:
+    get:
+      tags:
+        - member    
+      summary: Get all about team member (manager,courses completed & actual and last evidence capture) US 7 & 2
+      operationId: getAllTAboutByIdMember
+      parameters:
+        - name: "idMember"
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: "pdf"
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A successful response
+          content:
+            'application/json;charset=utf-8':
+              schema:
+                $ref: '#/components/schemas/PaginatedRulesets'
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+  /member/{idMember}/course/{idCatCourse}:
+    post:
+      tags:
+        - member    
+      summary: assing course by id memeber and name of Course US 5 & 3a
+      operationId: addCourseByIdMember
+      parameters:
+        - name: "idMember"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "idCatCourse"
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+    put:
+      tags:
+        - member    
+      summary: assing time and progress by id memeber and name of Course US 3b
+      operationId: addProgressByIdMember
+      parameters:
+        - name: "idMember"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "idCatCourse"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "date"
+          in: query
+          required: true
+          schema:
+            type: string    
+        - name: "progress"
+          in: query
+          required: true
+          schema:
+            type: number  
+        
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+    delete:
+      tags:
+        - member    
+      summary: unassing course by id memeber and idCatCourse US 5
+      operationId: deleteCourseByIdMember
+      parameters:
+        - name: "idMember"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "idCatCourse"
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+  /member/{idMember}/timesheet:
+    post:
+      tags:
+        - member    
+      summary: add a evience of timesheets US 4
+      operationId: createRuleSet
+      parameters:
+        - name: "idMember"
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+
+components:
+  schemas:
+    Execute:
+      properties:
+        argument:
+          type: string
+        callLogLevel:
+          type: string     
+    Event:
+      properties:
+        create:
+          type: array
+          items:
+            type: object
+        update:
+          type: array
+          items:
+            type: object
+    PaginatedRules:
+      type: object
+      properties:
+        content:
+          type : array
+          items: 
+            $ref: '#/components/schemas/Rule'
+        offset:
+          type: number
+        limit:
+          type: number
+        prev:
+          type: string
+        next:
+          type: string
+    PaginatedRulesets:
+      type: object
+      properties:
+        content:
+          type : array
+          items: 
+            $ref: '#/components/schemas/RuleSet'
+        offset:
+          type: number
+        limit:
+          type: number
+        prev:
+          type: string
+        next:
+          type: string
+    Rule:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        view:
+          type: string
+        operator:
+          type: string
+        type:
+          type: string
+        conditions:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+              operation:
+                type: string
+              value:
+                type: string
+        events:
+          type: object
+          properties:
+            success:
+              $ref: '#/components/schemas/Event'
+            failure:
+              $ref: '#/components/schemas/Event'
+    RuleSetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          rule_count:
+            type: integer
+    RuleSet:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        purpose:
+          type: string
+        frequency:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              ruleId:
+                type: string
+  securitySchemes:
+      ApiKeyAuth:
+       type: apiKey
+       in: header
+       name: apikey 

@@ -1,0 +1,222 @@
+openapi: 3.0.1
+info:
+  title: API Bench Catalog
+  description: Microservice that exposes rule engine APIs
+  version: 0.0.1
+servers:
+  - url: https://localhost/
+tags:
+  - name: Catalog
+paths:
+  /catalog/{nameCatalog}:
+    post:
+      tags:
+        - Catalog    
+      summary: assing course by id memeber and name of Course US 5 & 3a
+      operationId: createCatalog
+      parameters:
+        - name: "nameCatalog"
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+    delete:
+      tags:
+        - Catalog    
+      summary: assing course by id memeber and idCatCourse US 5
+      operationId: deleteCatalog
+      parameters:
+        - name: "nameCatalog"
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+  /catalog/{nameCatalog}/parameter/{nameParameter}:
+    post:
+      tags:
+        - Catalog    
+      summary: assing course by id memeber and name of Course US 5 & 3a
+      operationId: addParameterByNameCatalog
+      parameters:
+        - name: "nameCatalog"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "nameParameter"
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json;charset=utf-8':
+            schema:
+              $ref: '#/components/schemas/RuleSet'
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+  /catalog/{nameCatalog}/parameter/{idCatParameter}:
+    delete:
+      tags:
+        - Catalog    
+      summary: assing course by id memeber and idCatCourse US 5
+      operationId: deleteParameterByNameCatalog
+      parameters:
+        - name: "nameCatalog"
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: "idCatParameter"
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response          
+      security:
+        - ApiKeyAuth:
+            - system/ruleset.read
+            - system/ruleset.write
+ 
+
+components:
+  schemas:
+    Execute:
+      properties:
+        argument:
+          type: string
+        callLogLevel:
+          type: string     
+    Event:
+      properties:
+        create:
+          type: array
+          items:
+            type: object
+        update:
+          type: array
+          items:
+            type: object
+    PaginatedRules:
+      type: object
+      properties:
+        content:
+          type : array
+          items: 
+            $ref: '#/components/schemas/Rule'
+        offset:
+          type: number
+        limit:
+          type: number
+        prev:
+          type: string
+        next:
+          type: string
+    PaginatedRulesets:
+      type: object
+      properties:
+        content:
+          type : array
+          items: 
+            $ref: '#/components/schemas/RuleSet'
+        offset:
+          type: number
+        limit:
+          type: number
+        prev:
+          type: string
+        next:
+          type: string
+    Rule:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        view:
+          type: string
+        operator:
+          type: string
+        type:
+          type: string
+        conditions:
+          type: array
+          items:
+            type: object
+            properties:
+              column:
+                type: string
+              operation:
+                type: string
+              value:
+                type: string
+        events:
+          type: object
+          properties:
+            success:
+              $ref: '#/components/schemas/Event'
+            failure:
+              $ref: '#/components/schemas/Event'
+    RuleSetList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          rule_count:
+            type: integer
+    RuleSet:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        purpose:
+          type: string
+        frequency:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              ruleId:
+                type: string
+  securitySchemes:
+      ApiKeyAuth:
+       type: apiKey
+       in: header
+       name: apikey 
