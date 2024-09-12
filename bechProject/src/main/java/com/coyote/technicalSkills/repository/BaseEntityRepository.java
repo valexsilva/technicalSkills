@@ -1,4 +1,4 @@
-package com.coyote.technicalSkills.repositories;
+package com.coyote.technicalSkills.repository;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.coyote.technicalSkills.repositories.entities;
+package com.coyote.technicalSkills.repository.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

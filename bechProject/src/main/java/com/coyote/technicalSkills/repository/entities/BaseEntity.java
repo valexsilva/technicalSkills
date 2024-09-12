@@ -1,4 +1,4 @@
-package com.coyote.technicalSkills.repositories.entities;
+package com.coyote.technicalSkills.repository.entities;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;

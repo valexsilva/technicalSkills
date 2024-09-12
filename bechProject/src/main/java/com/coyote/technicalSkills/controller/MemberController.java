@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coyote.technicalSkills.repositories.PersonRepository;
-import com.coyote.technicalSkills.repositories.entities.Person;
+import com.coyote.technicalSkills.repository.PersonRepository;
+import com.coyote.technicalSkills.repository.entities.Person;
 
 @RestController
 @RequestMapping("/personas")
@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public Person actualizarPersona(@PathVariable Long id, @RequestBody Person personaActualizada) {
+    public Person actualizarPersona(@PathVariable String id, @RequestBody Person personaActualizada) {
         personaActualizada.setPersonId(id);
         return personRepository.save(personaActualizada);
     }

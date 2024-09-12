@@ -1,4 +1,4 @@
-package com.coyote.technicalSkills.repositories.entities;
+package com.coyote.technicalSkills.repository.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class Person extends BaseEntity {
 	 */
 	@Id
 	@Column(name = "DAS_ID", nullable = false)
-    private Long personId;
+    private String personId;
 	
 	/**
 	 * The name rfcFactoring.
